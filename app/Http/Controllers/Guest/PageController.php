@@ -9,6 +9,6 @@ class PageController extends Controller
 {
     public function index()
     {
-        return view('layouts.guest');
+        return view('guest.home');
     }
 }
