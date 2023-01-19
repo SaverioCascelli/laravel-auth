@@ -15,7 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return view('admin.projects.index');
+        $data = Project::all();
+        return view('admin.projects.index', compact('data'));
     }
 
 
@@ -26,7 +27,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -37,7 +38,14 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $new_project = new Project();
+        $data = $request->all();
+
+        $data['slug'] = Project::generateSlug($data['name']);
+        $new_project->fill($data);
+        $new_project->save();
+
+        return redirect(route('admin.projects.show', $new_project));
     }
 
     /**
@@ -48,7 +56,8 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -59,7 +68,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
@@ -71,7 +80,18 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+
+        $form_data = $request->all();
+        dd($form_data);
+        if ($form_data['name'] != $project->name) {
+            $form_data['slug'] = Project::generateSlug($form_data['name']);
+        } else {
+            $form_data['slug'] = $project->slug;
+        }
+
+        $project->update($form_data);
+
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**

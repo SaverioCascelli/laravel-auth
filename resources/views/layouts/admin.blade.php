@@ -25,13 +25,16 @@
 
         @include('admin/partials/header')
 
-        <main>
+        <main class="bg-secondary">
             <div class="container-fluid sc-main-container ">
                 <div class="row h-100">
-                    <div class="col-1 bg-dark h-100 ">
-                        @include('admin/partials/aside')
-                    </div>
-                    <div class="col-auto">
+                    @auth
+
+                        <div class="col-1 bg-dark h-100 ">
+                            @include('admin/partials/aside')
+                        </div>
+                    @endauth
+                    <div class="col">
                         @yield('content')
                     </div>
                 </div>

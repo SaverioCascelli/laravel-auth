@@ -1,7 +1,8 @@
 <aside>
-    <ul>
-        <li><a href="#">index</a></li>
-        <li><a href="">create</a></li>
+    <ul class="mt-5">
+        <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+        <li><a href="{{ route('admin.projects.index') }}">Index</a></li>
+        <li><a href="{{ route('admin.projects.create') }}">Create</a></li>
         <li><a href=""></a></li>
         <li><a href=""></a></li>
     </ul>
