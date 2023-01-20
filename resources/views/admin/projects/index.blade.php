@@ -23,13 +23,7 @@
                                 <td>
                                     <a href="{{ route('admin.projects.show', $project) }}">show </a>
                                     <a href="{{ route('admin.projects.edit', $project) }}">edit</a>
-
-                                    <form method="POST" action="{{ route('admin.projects.destroy', $project) }}">
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button href="">delete</button>
-                                    </form>
+                                    @include('admin.partials.delete_button')
                                 </td>
                             </tr>
                         @endforeach
