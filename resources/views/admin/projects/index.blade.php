@@ -8,9 +8,10 @@
                 <table class="table bg-white">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Client name</th>
+                            <th scope="col"><a href="{{ route('admin.orderby', ['id', $direction]) }}">ID</a></th>
+                            <th scope="col"><a href="{{ route('admin.orderby', ['name', $direction]) }}">Name</a></th>
+                            <th scope="col"><a href="{{ route('admin.orderby', ['client_name', $direction]) }}">Client
+                                    Name</a></th>
                             <th scope="col">actions</th>
 
                         </tr>
