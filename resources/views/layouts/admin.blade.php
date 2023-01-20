@@ -25,7 +25,7 @@
 
         @include('admin/partials/header')
 
-        <main class="bg-secondary">
+        <min class="bg-secondary">
             <div class="container-fluid sc-main-container ">
                 <div class="row h-100">
                     @auth
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </div>
-        </main>
+        </min>
     </div>
 </body>
 

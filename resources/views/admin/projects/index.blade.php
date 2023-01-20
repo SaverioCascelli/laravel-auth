@@ -4,6 +4,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col">
+
                 <table class="table bg-white">
                     <thead>
                         <tr>
