@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+
 
 class ProjectController extends Controller
 {
@@ -15,7 +17,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $data = Project::all();
+        $data = Project::paginate(5);
         return view('admin.projects.index', compact('data'));
     }
 
@@ -82,7 +84,7 @@ class ProjectController extends Controller
     {
 
         $form_data = $request->all();
-        dd($form_data);
+
         if ($form_data['name'] != $project->name) {
             $form_data['slug'] = Project::generateSlug($form_data['name']);
         } else {
