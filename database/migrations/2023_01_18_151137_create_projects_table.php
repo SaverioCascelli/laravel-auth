@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
 
             $table->string('name');
-            $table->string('slug');
-            $table->string('client_name', 160);
+            $table->string('slug')->unique();
+            $table->string('client_name');
             $table->string('summary');
-            $table->string('cover_img');
-
+            $table->string('img')->nullable();
+            $table->string('img_original_name')->nullable();
             $table->timestamps();
         });
     }

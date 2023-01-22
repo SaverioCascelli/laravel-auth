@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\ProjectRequest;
-
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -51,8 +51,13 @@ class ProjectController extends Controller
     {
         $new_project = new Project();
         $data = $request->all();
-
+        if (array_key_exists('img', $data)) {
+            //dd($data);
+            $data['img_original_name'] = $request->file('img')->getClientOriginalName();
+            $data['img'] = Storage::put('uploads', $data['img']);
+        }
         $data['slug'] = Project::generateSlug($data['name']);
+
         $new_project->fill($data);
         $new_project->save();
 
@@ -92,15 +97,23 @@ class ProjectController extends Controller
     public function update(ProjectRequest $request, Project $project)
     {
 
-        $form_data = $request->all();
+        $data = $request->all();
 
-        if ($form_data['name'] != $project->name) {
-            $form_data['slug'] = Project::generateSlug($form_data['name']);
+        if ($data['name'] != $project->name) {
+            $data['slug'] = Project::generateSlug($data['name']);
         } else {
-            $form_data['slug'] = $project->slug;
+            $data['slug'] = $project->slug;
         }
 
-        $project->update($form_data);
+        if (array_key_exists('img', $data)) {
+            if ($project->img) {
+                Storage::disk('public')->delete($project->img);
+            }
+            $data['img_original_name'] = $request->file('img')->getClientOriginalName();
+            $data['img'] = Storage::put('uploads', $data['img']);
+        }
+
+        $project->update($data);
 
         return redirect()->route('admin.projects.show', $project);
     }
@@ -113,6 +126,10 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+
+        if ($project->img) {
+            Storage::disk('public')->delete($project->img);
+        }
         $project->delete();
 
         return redirect(route('admin.projects.index'));

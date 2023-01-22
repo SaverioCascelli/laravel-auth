@@ -8,7 +8,7 @@
             @endforeach
         </ul>
     @endif
-    <form class="m-5" method="POST" action="{{ route('admin.projects.update', $project) }}">
+    <form class="m-5" method="POST" action="{{ route('admin.projects.update', $project) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -37,15 +37,27 @@
                 <p class="invalid-feedback">{{ $message }}</p>
             @enderror
         </div>
+
+
         <div class="mb-3">
-            <label for="cover_img" class="form-label">Cover img</label>
-            <input value="{{ old('cover_img', $project->cover_img) }}" type="text"
-                class="form-control @error('cover_img') is-invalid @enderror" id="cover_img" name="cover_img">
-            @error('cover_img')
+            <label for="img" class="form-label">Cover img</label>
+            <input onchange="showImage(event)" value="{{ old('img') }}" type="file"
+                class="form-control @error('img') is-invalid @enderror" name="img">
+            @error('img')
                 <p class="invalid-feedback">{{ $message }}</p>
             @enderror
+            <div class="image mt-2">
+                <img id='output-image' width="150" src="{{ asset('storage/' . $project->img) }}" alt="">
+            </div>
         </div>
+
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <script>
+        function showImage(event) {
+            const tagImage = document.getElementById('output-image');
+            tagImage.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 @endsection
